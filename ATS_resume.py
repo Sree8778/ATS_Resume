@@ -1,4 +1,7 @@
-
+pip install streamlit
+pip install StringIO
+pip install docx2txt
+pip install base64
 import streamlit as st
 import docx2txt
 from io import StringIO
