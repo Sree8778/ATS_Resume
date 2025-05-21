@@ -3,3 +3,4 @@ docx2txt
 PyMuPDF
 fpdf
 PdfReader
+PyPDF2
