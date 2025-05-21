@@ -45,13 +45,17 @@ def convert_to_ats_format(text):
 def create_pdf_from_sections(sections, output_path):
     pdf = FPDF()
     pdf.add_page()
-    pdf.set_font("Arial", size=12)
+
     for section, content in sections.items():
-        pdf.set_font(style="B")
+        pdf.set_font("Arial", style="B", size=12)  # FIXED LINE
         pdf.cell(0, 10, f"{section.upper()}", ln=True)
-        pdf.set_font(style="")
-        pdf.multi_cell(0, 10, content or "N/A")  # Ensure something prints
+        pdf.set_font("Arial", style="", size=12)   # FIXED LINE
+        for line in content.splitlines():
+            pdf.multi_cell(0, 10, line)
         pdf.ln()
+
+    pdf.output(str(output_path))
+
     try:
         pdf.output(str(output_path))
         print(f"✅ PDF saved: {output_path.name}")
