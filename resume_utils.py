@@ -79,13 +79,20 @@ def process_resumes(input_folder, output_zip):
             pdf_name = filepath.stem + "_ATS.pdf"
             pdf_output_path = output_dir / pdf_name
             create_pdf_from_sections(ats_data, pdf_output_path)
-            pdf_paths.append(pdf_output_path)
-            resume_count += 1
+
+            if pdf_output_path.exists():
+                pdf_paths.append(pdf_output_path)
+                resume_count += 1
+            else:
+                print(f"❌ PDF not created: {pdf_output_path}")
 
     if resume_count == 0:
         print("🚫 No valid resumes were processed.")
     else:
         with ZipFile(output_zip, 'w') as zipf:
             for file in pdf_paths:
-                zipf.write(file, arcname=file.name)
-            print(f"📦 ATS resumes zipped: {output_zip}")
+                if file.exists():
+                    zipf.write(file, arcname=file.name)
+                else:
+                    print(f"⚠️ Skipping missing file: {file}")
+        print(f"📦 ATS resumes zipped: {output_zip}")
