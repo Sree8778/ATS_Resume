@@ -1,12 +1,10 @@
 import streamlit as st
 import zipfile
 import os
-import shutil
 import tempfile
 from resume_utils import process_resumes
 
 st.set_page_config(page_title="Bulk ATS Resume Formatter", layout="centered")
-
 st.title("📂 Bulk ATS Resume Formatter")
 
 option = st.radio("Choose Upload Type:", ["Upload ZIP", "Upload Multiple Files/Folders"])
@@ -25,13 +23,12 @@ if (option == "Upload ZIP" and uploaded_zip) or (option == "Upload Multiple File
             with zipfile.ZipFile(uploaded_zip, 'r') as zip_ref:
                 zip_ref.extractall(raw_dir)
         else:
-            # Save each uploaded file into raw_dir
             for file in uploaded_files:
                 file_path = os.path.join(raw_dir, file.name)
                 with open(file_path, "wb") as f:
                     f.write(file.read())
 
-        ats_zip_path = os.path.join(temp_dir, "ats_resumes.zip")
+        ats_zip_path = os.path.join(temp_dir, "ATS_Formatted_Resumes.zip")
         process_resumes(raw_dir, ats_zip_path)
 
         st.success("✅ ATS Resumes generated successfully!")
