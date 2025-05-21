@@ -4,3 +4,4 @@ PyMuPDF
 fpdf
 PdfReader
 PyPDF2
+
