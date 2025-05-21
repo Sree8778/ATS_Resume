@@ -2,3 +2,4 @@ streamlit
 docx2txt
 PyMuPDF
 fpdf
+PdfReader
